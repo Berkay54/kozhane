@@ -1,0 +1,347 @@
+/* ============ BEYTİ BÖLÜMÜ ============ */
+.bey {
+  --p: 0;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(5rem, 10vw, 9rem) 0 0;
+  background:
+    radial-gradient(ellipse 50% 35% at 50% 52%, rgba(232, 89, 42, 0.14), transparent 70%),
+    var(--coal);
+  color: var(--cream);
+}
+
+.bey__head,
+.bey__steps,
+.bey__cta {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3.5rem);
+}
+
+/* --- Başlık --- */
+.bey__head {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: end;
+  gap: 2rem clamp(2rem, 6vw, 6rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.bey__title {
+  position: relative;
+  margin: 0;
+  line-height: 0.85;
+}
+
+.bey__title-display {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(5rem, 15vw, 14rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+/* "sarma" — büyük harflerin üstüne sarılan italik serif */
+.bey__title-script {
+  position: absolute;
+  right: 4%;
+  bottom: -0.32em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(3rem, 8vw, 7.5rem);
+  color: var(--ember);
+  text-shadow: 0 0 0.25em var(--coal), 0 0 0.5em var(--coal);
+  transform: rotate(-6deg);
+}
+
+.bey__eyebrow {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember-soft);
+}
+
+.bey__lead {
+  margin: 0;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--cream-dim);
+}
+
+.bey__lead em {
+  font-family: var(--font-serif);
+  color: var(--cream);
+}
+
+/* --- Sinematik sahne --- */
+.bey__stage {
+  padding: 0 clamp(0rem, 1.5vw, 1.5rem);
+}
+
+/* Kaydırdıkça kenarlardan açılır: --p 0 → 1 */
+.bey__screen {
+  position: relative;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  background: var(--coal-2);
+  clip-path: inset(
+    calc((1 - var(--p)) * 7%) calc((1 - var(--p)) * 14%)
+    round calc(48px - var(--p) * 30px)
+  );
+  will-change: clip-path;
+}
+
+.bey__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: scale(calc(1.18 - var(--p) * 0.18));
+}
+
+.bey__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 75% 75% at 50% 50%, transparent 55%, rgba(22, 17, 13, 0.6) 100%);
+}
+
+.bey__tag {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(22, 17, 13, 0.55);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: var(--p);
+}
+
+.bey__tag--tl {
+  top: clamp(0.8rem, 2.5vw, 2rem);
+  left: clamp(0.8rem, 2.5vw, 2rem);
+}
+
+.bey__tag--br {
+  right: clamp(0.8rem, 2.5vw, 2rem);
+  bottom: clamp(0.8rem, 2.5vw, 2rem);
+}
+
+.bey__tag i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ember);
+  animation: bey-blink 1.4s steps(2, start) infinite;
+}
+
+/* --- Adımlar --- */
+.bey__steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  list-style: none;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.bey__steps li {
+  position: relative;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease calc(0.2s + var(--i) * 0.15s),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) calc(0.2s + var(--i) * 0.15s);
+}
+
+/* Üst çizgide soldan dolan köz rengi */
+.bey__steps li::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--ember);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s ease calc(0.5s + var(--i) * 0.15s);
+}
+
+.bey.is-visible .bey__steps li {
+  opacity: 1;
+  transform: none;
+}
+
+.bey.is-visible .bey__steps li::before {
+  transform: scaleX(1);
+}
+
+.bey__step-no {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ember-soft);
+}
+
+.bey__steps h3 {
+  margin: 0.5rem 0 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.bey__steps p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--cream-dim);
+}
+
+/* --- Kapanış CTA --- */
+.bey__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--line);
+}
+
+.bey__cta-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6.5vw, 6rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.bey__cta-text em {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 300;
+  text-transform: none;
+  color: var(--ember);
+}
+
+.bey__cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.bey__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 1.8rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background 0.25s;
+}
+
+.bey__btn--primary {
+  background: var(--ember);
+  color: var(--coal);
+}
+
+.bey__btn--primary:hover {
+  background: var(--ember-soft);
+}
+
+.bey__btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.25s;
+}
+
+.bey__btn:hover svg {
+  transform: translateX(4px);
+}
+
+.bey__hours {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.bey__hours span {
+  display: block;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+@keyframes bey-blink {
+  to { visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bey *,
+  .bey *::before {
+    transition: none !important;
+    animation: none !important;
+  }
+  .bey__steps li {
+    opacity: 1;
+    transform: none;
+  }
+  .bey__steps li::before {
+    transform: scaleX(1);
+  }
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 900px) {
+  .bey__head {
+    grid-template-columns: 1fr;
+  }
+  .bey__title {
+    margin-bottom: 2rem;
+  }
+  .bey__steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .bey__screen {
+    aspect-ratio: 4 / 3;
+  }
+  .bey__tag--br {
+    display: none;
+  }
+  .bey__cta-actions {
+    flex-wrap: wrap;
+  }
+}
