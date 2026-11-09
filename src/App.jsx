@@ -8,6 +8,9 @@ export default function App() {
       <Hero />
       <Iskender />
       <Beyti />
+      <footer className="site-credit">
+        Közhane hayali bir markadır, konsept çalışmadır. Tasarım ve geliştirme: <a href="https://dablabs.net/" target="_blank" rel="noopener">DAB Labs</a>
+      </footer>
     </main>
   )
 }

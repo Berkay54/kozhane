@@ -46,3 +46,18 @@ a {
   background: var(--ember);
   color: var(--coal);
 }
+
+/* tasarım bağlantısı */
+.site-credit {
+  padding: 28px 24px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cream-dim);
+  border-top: 1px solid var(--line);
+  background: var(--coal);
+}
+
+.site-credit a {
+  color: var(--ember-soft);
+}
